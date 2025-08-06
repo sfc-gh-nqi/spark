@@ -1,8 +1,8 @@
 #!/bin/bash
 # Update Apache Spark version to Snowflake version
 
-SPARK_VERSION="${1:-4.0.0}"
-SNOWFLAKE_SUFFIX="${2:-snowflake_0}"
+SPARK_VERSION="${1:-3.5.0}"
+SNOWFLAKE_SUFFIX="${2:-SNOWFLAKE_0}"
 FULL_VERSION="${SPARK_VERSION}-${SNOWFLAKE_SUFFIX}"
 
 echo "Updating version to: $FULL_VERSION"
@@ -30,4 +30,4 @@ if [ -f "python/setup.py" ]; then
     fi
 fi
 
-echo "Version updated successfully"
+echo "Version update completed to: $FULL_VERSION"
