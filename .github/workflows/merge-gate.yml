@@ -33,14 +33,15 @@ jobs:
         chmod +x build/update-version.sh
         ./build/build-spark.sh
       env:
-        MAVEN_OPTS: -Xmx2g -XX:ReservedCodeCacheSize=1g
+        MAVEN_OPTS: -Xmx2g -XX:ReservedCodeCacheSize=1g -Dio.netty.tryReflectionSetAccessible=true
     
     - name: Run Selective Tests  
       run: |
         chmod +x build/run-selective-tests.sh
-        # Check if PR has custom test allowlist
         if [ -f "test-config/test-allowlist-pr-${{ github.event.pull_request.number }}.txt" ]; then
           ./build/run-selective-tests.sh "test-config/test-allowlist-pr-${{ github.event.pull_request.number }}.txt"
         else
           ./build/run-selective-tests.sh
         fi
+      env:
+        MAVEN_OPTS: -Xmx2g -XX:ReservedCodeCacheSize=1g -Dio.netty.tryReflectionSetAccessible=true
