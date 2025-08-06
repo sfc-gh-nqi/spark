@@ -19,12 +19,23 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     
+    - name: Cache Maven dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    
     - name: Build Spark
       run: |
         chmod +x build/build-spark.sh
+        chmod +x build/update-version.sh
         ./build/build-spark.sh
+      env:
+        MAVEN_OPTS: -Xmx2g -XX:ReservedCodeCacheSize=1g
     
-    - name: Run Selective Tests
+    - name: Run Selective Tests  
       run: |
         chmod +x build/run-selective-tests.sh
         # Check if PR has custom test allowlist
